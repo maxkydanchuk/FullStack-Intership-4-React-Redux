@@ -2,28 +2,32 @@ import { React } from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import { ArrowUpIcon, ArrowDownIcon, ArrowUpDownIcon } from "@chakra-ui/icons";
 
-const AppHeader = ({ onSortChange, sortOrder }) => {
-
-  // function getArrows(order) {
-  //   if (order) {
-  //     return <ArrowUpIcon />;
-  //   }
-  //   if (!order) {
-  //     return <ArrowDownIcon />;
-  //   } else {
-  //     return <ArrowUpDownIcon />;
-  //   }
-  // }
+const AppHeader = ({ onSortChange, sortOrder, sortColumn }) => {
+  function getArrows(order) {
+    if (order) {
+      return <ArrowUpIcon />;
+    }
+    if (!order) {
+      return <ArrowDownIcon />;
+    } 
+  }
 
   const buttons = [
-    { name: "name", label: "Name"},
-    { name: "birthYear", label: "Birth Year"},
-    { name: "gender", label: "Gender"},
-    { name: "eyeColor", label: "Eye Color"},
-    { name: "height", label: "Height"},
+    { name: "name", label: "Name" },
+    { name: "birthYear", label: "Birth Year" },
+    { name: "gender", label: "Gender" },
+    { name: "eyeColor", label: "Eye Color" },
+    { name: "height", label: "Height" },
   ];
 
   const Boxes = buttons.map(({ name, label }) => {
+    function sortedArrows() {
+      if (sortColumn === name) {
+        return getArrows(sortOrder);
+      } else {
+        return <ArrowUpDownIcon />;
+      }
+    }
     return (
       <Box
         key={name}
@@ -36,7 +40,7 @@ const AppHeader = ({ onSortChange, sortOrder }) => {
           color: "teal.500",
         }}
       >
-        {label}  {sortOrder ? <ArrowUpIcon /> : <ArrowDownIcon />}
+        {label} {sortedArrows()}
       </Box>
     );
   });
